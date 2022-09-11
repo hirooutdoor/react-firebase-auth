@@ -13,21 +13,18 @@ function App() {
     <AuthProvider>
       <div style={{ margin: '2em' }}>
         <BrowserRouter>
-        <Routes>
-          <Route exact path="/" element={
-          <PrivateRoute path={"/"}>
-            <Home/>
-          </PrivateRoute>} />
-
-          <Route path="/signup" element={
-            <PublicRoute path="/signup">
-              <SignUp/>
-            </PublicRoute>} />
-            
-          <Route path="/login" element={<Login/>} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={
+            <PrivateRoute >
+              <Home/>
+            </PrivateRoute>} />
+            <Route path="/signup" element={
+              <PublicRoute >
+                <SignUp/>
+              </PublicRoute>} />
+            <Route path="/login" element={<Login/>} />
+          </Routes>
         </BrowserRouter>
-
       </div>
     </AuthProvider>
   );
