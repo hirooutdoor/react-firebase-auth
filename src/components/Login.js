@@ -1,6 +1,7 @@
 import { auth } from '../firebase';
 import { Link ,useNavigate } from 'react-router-dom';
 import {useState} from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,11 +10,14 @@ const Login = () => {
     e.preventDefault();
     const{ email, password }=e.target.elements;
     try{
-      await auth.signInWithEmailAndPassword(email.value,password.value);
+      await signInWithEmailAndPassword(auth, email.value,password.value);
     navigate("/");
-  }catch(error){
-    console.log(error);
-    setError(error.message);
+    console.log("catch")
+  } catch(error){
+    console.log(error.code);
+    if (error.code === "auth/invalid-email") {
+      setError("The email is badly formatted.")
+    } else {setError(error.message);}
   }
     };
   return( 
@@ -23,7 +27,7 @@ const Login = () => {
     <form onSubmit={handleSubmit}>
       <div>
       <label>メールアドレス</label>
-          <input name="email" type="email" placeholder="email" />
+          <input name="email" placeholder="email" />
         </div>
         <div>
           <label>パスワード</label>

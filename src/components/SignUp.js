@@ -1,6 +1,7 @@
 import { auth } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const SignUp = () => {
     event.preventDefault();
     const { email, password } = event.target.elements;
     try{ await
-   auth.createUserWithEmailAndPassword(email.value, password.value);
+   createUserWithEmailAndPassword(auth,email.value, password.value);
    navigate("/");
   }catch(error){
     setError(error.message);
